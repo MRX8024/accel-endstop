@@ -44,7 +44,7 @@ class AccelEndstop:
         self.mcu_endstop = ppins.setup_pin('endstop', self.int_pin)
         # Read config
         self.tap_thresh = config.getfloat(
-            'tap_thresh', 5000., minval=TAP_SCALE, maxval=16000.)
+            'tap_thresh', 5000., minval=TAP_SCALE, maxval=156200.)
         self.tap_dur = config.getfloat(
             'tap_dur', 0.01, above=DUR_SCALE, maxval=0.159)
         # Register commands and callbacks
@@ -122,10 +122,10 @@ class AccelEndstop:
     def cmd_SET_ACCEL_ENDSTOP(self, gcmd):
         if (gcmd.get('TAP_THRESH', None) is None
              and gcmd.get('TAP_DUR', None) is None):
-            gcmd.respond_info(f'TAP_THRESH={self.tap_thresh},'
-                              f' TAP_DUR={self.tap_dur}')
+            gcmd.respond_info(f'TAP_THRESH={self.tap_thresh}, '
+                              f'TAP_DUR={self.tap_dur}')
         self.tap_thresh = gcmd.get_float('TAP_THRESH', self.tap_thresh,
-                                         minval=TAP_SCALE, maxval=16000.)
+                                         minval=TAP_SCALE, maxval=156200.)
         self.tap_dur = gcmd.get_float('TAP_DUR', self.tap_dur,
                                       above=DUR_SCALE, maxval=0.159)
         self.setup_tap_regs()
